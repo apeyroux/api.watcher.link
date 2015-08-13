@@ -1,4 +1,7 @@
 # coding=utf-8
+
+#todo: faire des snap?get ?make ?list
+
 import datetime
 import re
 from mongoengine import DoesNotExist, ValidationError
@@ -21,11 +24,6 @@ app.config['MONGODB_SETTINGS'] = {
 }
 
 db = MongoEngine(app)
-# moche mais rapide
-phantom = webdriver.PhantomJS(service_args=['--web-security=false',
-                                            '--ssl-protocol=any',
-                                            '--ignore-ssl-errors=true'])
-phantom.set_window_size(1024, 768)
 
 # Pour plustard, sert à faire un "cache" de diff
 class Diff(db.Document):
@@ -114,21 +112,60 @@ def diffhtml(pageid):
 
 
 @app.route('/diff/<pageid>/')
-def diff(pageid):
-    try:
-        snaps = Page.objects.get(id=pageid).snaps
-    except DoesNotExist:
-        abort(404)
-    except ValidationError:
-        abort(500)
-    except:
-        abort(500)
-    else:
-        if len(snaps) >= 2:
-            fst = snaps[-1]
-            snd = snaps[-2]
-            fstcleanhtml = cleanhtml(fst.html)
-            sndcleanhtml = cleanhtml(snd.html)
+@app.route('/diff/<snapa>/<snapb>/')
+def diff(pageid=None, snapa=None, snapb=None):
+    if pageid:
+        try:
+            snaps = Page.objects.get(id=pageid).snaps
+        except DoesNotExist:
+            abort(404)
+        except ValidationError:
+            abort(500)
+        except:
+            abort(500)
+        else:
+            if len(snaps) >= 2:
+                fst = snaps[-1]
+                snd = snaps[-2]
+                fstcleanhtml = cleanhtml(fst.html)
+                sndcleanhtml = cleanhtml(snd.html)
+                sm = SequenceMatcher(None,
+                                     sndcleanhtml,
+                                     fstcleanhtml)
+                txtinsert = []
+                txtdel = []
+                txtreplace = []
+                for tag, i1, i2, j1, j2 in sm.get_opcodes():
+                    if tag == "replace":
+                        txtreplace.append(
+                            ("%s <-> %s" % ("".join(fstcleanhtml[i1:i2]), "".join(sndcleanhtml[j1:j2]))).strip())
+                    if tag == "insert":
+                        txtinsert.append(("%s %s" % ("".join(fstcleanhtml[i1:i2]), "".join(sndcleanhtml[j1:j2]))).strip())
+                    if tag == "delete":
+                        txtdel.append(("%s %s" % ("".join(fstcleanhtml[i1:i2]), "".join(sndcleanhtml[j1:j2]))).strip())
+                return jsonify({
+                    'diff': {'fst': {'id': str(fst.id), 'dthr': fst.dthr},
+                             'snd': {'id': str(snd.id), 'dthr': snd.dthr},
+                             'ratio': sm.ratio(),
+                             'insert': txtinsert,
+                             'replace': txtreplace,
+                             'delete': txtdel}
+                })
+            else:
+                abort(500)
+    elif snapa and snapb:
+        try:
+            sa = Snap.objects.get(id=snapa)
+            sb = Snap.objects.get(id=snapb)
+        except DoesNotExist:
+            abort(404)
+        except ValidationError:
+            abort(500)
+        except:
+            abort(500)
+        else:
+            fstcleanhtml = cleanhtml(sa.html)
+            sndcleanhtml = cleanhtml(sb.html)
             sm = SequenceMatcher(None,
                                  sndcleanhtml,
                                  fstcleanhtml)
@@ -144,16 +181,15 @@ def diff(pageid):
                 if tag == "delete":
                     txtdel.append(("%s %s" % ("".join(fstcleanhtml[i1:i2]), "".join(sndcleanhtml[j1:j2]))).strip())
             return jsonify({
-                'diff': {'fst': {'id': str(fst.id), 'dthr': fst.dthr},
-                         'snd': {'id': str(snd.id), 'dthr': snd.dthr},
+                'diff': {'fst': {'id': str(sa.id), 'dthr': sa.dthr},
+                         'snd': {'id': str(sb.id), 'dthr': sb.dthr},
                          'ratio': sm.ratio(),
                          'insert': txtinsert,
                          'replace': txtreplace,
                          'delete': txtdel}
             })
-        else:
-            abort(500)
-
+    else:
+        abort(500)
 
 @app.route('/snap/<pageid>/')
 def snap(pageid):
@@ -167,9 +203,15 @@ def snap(pageid):
         abort(500)
     else:
         html = requests.get(page.baseurl).text
+        phantom = webdriver.PhantomJS(desired_capabilities={'acceptSslCerts': True},
+                                      service_args=['--web-security=false',
+                                                    '--ssl-protocol=any',
+                                                    '--ignore-ssl-errors=true'])
+        phantom.set_window_size(1024, 768)
         phantom.get(page.baseurl)
         screenshot = phantom.get_screenshot_as_png()
         page.update(push__snaps=Snap(html, datetime.datetime.now(), screenshot).save())
+        phantom.close()
         return jsonify({'page': page})
 
 
