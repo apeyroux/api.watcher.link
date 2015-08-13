@@ -1,0 +1,6 @@
+html2text
+requests
+flask
+flask-mongoengine
+mongoengine
+beautifulsoup4
