@@ -25,7 +25,9 @@ curl http://api.watcher.link/new/?url=http://classik.forumactif.com/f7-concerts
 }
 ```
 
-### Je fais un snap avec l'id de la page 55cd19651d4aba7ea02889e1
+### Faire un snap 
+
+Avec comme id de page 55cd19651d4aba7ea02889e1
 
 curl http://api.watcher.link/snap/55cd19651d4aba7ea02889e1/
 
