@@ -144,6 +144,9 @@ def new():
             else:
                 page = Page(name, url)
                 page.save()
+                # todo: init des snap, c'est moche ...
+                for _ in range(0, 2):
+                    snap(page.id)
                 js['page'] = page
                 return jsonify(js)
         except:
