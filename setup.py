@@ -10,7 +10,7 @@ setup(
     author_email='m@ja.pe',
     description='', requires=['flask',
                               'requests',
-                              'flask-mongoengine',
                               'mongoengine',
-                              'beautifulsoup4']
+                              'beautifulsoup4',
+                              'selenium']
 )
