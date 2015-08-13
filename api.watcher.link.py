@@ -11,6 +11,8 @@ from difflib import SequenceMatcher, HtmlDiff
 from flask.ext.mongoengine import MongoEngine
 from mongoengine.fields import StringField, DateTimeField, ListField, ReferenceField, FloatField
 
+DEFAULTMAXRATION=0.97
+
 app = Flask(__name__)
 
 app.config['MONGODB_SETTINGS'] = {
@@ -143,7 +145,7 @@ def new():
                 js['page'] = page
                 return jsonify(js)
             else:
-                page = Page(name, url, 0.97)
+                page = Page(name, url, DEFAULTMAXRATION)
                 page.save()
                 # todo: init des snap, c'est moche ...
                 for _ in range(0, 2):
