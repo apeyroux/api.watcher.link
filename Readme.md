@@ -1,4 +1,8 @@
-# Exemple d'utilisation 
+# 'watcher' de liens en 150 lignes
+
+Exemple simple d'un watcher de liens. Il manque des fonctions comme des abonnements 
+qui pourraient envoyer un mail si une page change avec un ratio < .80, ajouter un 
+screenshot de la page au snap avec weasyprint ...
 
 ## Exemple
 
