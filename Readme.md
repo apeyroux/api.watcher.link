@@ -1,7 +1,7 @@
 # watcher de liens
 
 Exemple simple d'un watcher de liens. Il manque des fonctions comme des abonnements 
-qui pourraient envoyer un mail si une page change avec un maxratio < .80.
+qui pourraient envoyer un mail si une page change avec un maxratio < 0.80.
 
 ## Exemple utilisation
 
@@ -88,7 +88,8 @@ curl http://api.watcher.link/diff/55cd19651d4aba7ea02889e1/
 ```
 
 Ici, un ratio, de 0.99, la page n'a pas bcp changée. Il y a eu qu'un inster 'BEGIN cookies ...' qui ne sert à rien. 
-Un 'vrais' changement à un ratio de moins de 0.98 0.97. Il faut faire des tests sur votre page pour voir le bon ratio.
+Un 'vrais' changement à un ratio de moins de 0.98 0.97. Si le ratio est à 1 alors la page n'a pas changée.
+Il faut faire des tests sur votre page pour voir le bon ratio.
 
 ### Voir le diff html
 
