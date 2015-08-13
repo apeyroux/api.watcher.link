@@ -13,14 +13,24 @@ http://api.watcher.link/diff/55cc953f1d4aba76d0162f4f/
 ```
 {
   "diff": {
+    "delete": [
+      "TwitterRecherche", 
+      "bit.ly/1gszRGs\u00a0Voir le r\u00e9sum\u00e9Masquer le r\u00e9sum\u00e92 Retweets1 favorisR\u00e9pondreRetweeter2Retweet\u00e92Favori1Ajout\u00e9 aux favoris1Plus"
+    ], 
     "fst": {
-      "dthr": "Thu, 13 Aug 2015 15:02:22 GMT", 
-      "id": "55cc955e1d4aba76d0162f53"
+      "dthr": "Thu, 13 Aug 2015 15:18:35 GMT", 
+      "id": "55cc992b1d4aba76f425f2bd"
     }, 
-    "ratio": 0.979129397734049, 
+    "insert": [
+      "@j4pe_36 minil y a 36 minutesVoir la traductionWhy learn haskell for great good ... #python#haskellhttps://gist.github.com/j4/8369502251f6cbc49239\u00a0\u2026Voir la traduction\u00c0 l'origine en"
+    ], 
+    "ratio": 0.9779104477611941, 
+    "replace": [
+      "691 <-> j4pe_"
+    ], 
     "snd": {
-      "dthr": "Thu, 13 Aug 2015 15:02:10 GMT", 
-      "id": "55cc95521d4aba76d0162f52"
+      "dthr": "Thu, 13 Aug 2015 15:18:18 GMT", 
+      "id": "55cc991a1d4aba76f425f2bc"
     }
   }
 }
@@ -85,14 +95,24 @@ Plus le ratio est petit, plus il y a eu du changement. Le ratio est compris entr
 ```
 {
   "diff": {
+    "delete": [
+      "TwitterRecherche", 
+      "bit.ly/1gszRGs\u00a0Voir le r\u00e9sum\u00e9Masquer le r\u00e9sum\u00e92 Retweets1 favorisR\u00e9pondreRetweeter2Retweet\u00e92Favori1Ajout\u00e9 aux favoris1Plus"
+    ], 
     "fst": {
-      "dthr": "Thu, 13 Aug 2015 14:57:33 GMT", 
-      "id": "55cc943d1d4aba76d0162f4e"
+      "dthr": "Thu, 13 Aug 2015 15:18:35 GMT", 
+      "id": "55cc992b1d4aba76f425f2bd"
     }, 
-    "ratio": 1.0, 
+    "insert": [
+      "@j4pe_36 minil y a 36 minutesVoir la traductionWhy learn haskell for great good ... #python#haskellhttps://gist.github.com/j4/8369502251f6cbc49239\u00a0\u2026Voir la traduction\u00c0 l'origine en"
+    ], 
+    "ratio": 0.9779104477611941, 
+    "replace": [
+      "691 <-> j4pe_"
+    ], 
     "snd": {
-      "dthr": "Thu, 13 Aug 2015 14:57:32 GMT", 
-      "id": "55cc943c1d4aba76d0162f4d"
+      "dthr": "Thu, 13 Aug 2015 15:18:18 GMT", 
+      "id": "55cc991a1d4aba76f425f2bc"
     }
   }
 }
