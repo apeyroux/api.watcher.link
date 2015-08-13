@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 # import weasyprint # plustard, faire un screen de la page
 from difflib import SequenceMatcher, HtmlDiff
 from flask.ext.mongoengine import MongoEngine
-from mongoengine.fields import StringField, DateTimeField, ListField, ReferenceField
+from mongoengine.fields import StringField, DateTimeField, ListField, ReferenceField, FloatField
 
 app = Flask(__name__)
 
@@ -32,6 +32,7 @@ class Content(db.Document):
 class Page(db.Document):
     name = StringField(required=True)
     baseurl = StringField(required=True)
+    maxratio = FloatField()
     contents = ListField(ReferenceField(Content))
     diffs = ListField(ReferenceField(Diff))
 
@@ -142,7 +143,7 @@ def new():
                 js['page'] = page
                 return jsonify(js)
             else:
-                page = Page(name, url)
+                page = Page(name, url, 0.97)
                 page.save()
                 # todo: init des snap, c'est moche ...
                 for _ in range(0, 2):
