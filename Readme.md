@@ -50,6 +50,9 @@ http://api.watcher.link/diffhtml/55cc953f1d4aba76d0162f4f/
 
 ## Snap d'une url
 
+Le différentiel est fait entre les deux derniers snaps. 
+Plus les snaps sont courts, moins il y a de chance d'avoir un diff.
+
 *http://api.watcher.link/snap/55cc93bb1d4aba76d0162f4b/*
 
 ```
@@ -75,7 +78,7 @@ http://api.watcher.link/diffhtml/55cc953f1d4aba76d0162f4f/
 
 ## Diff d'une url
 
-If the ratio is small, the page had more change. Here, there was not to change.
+Plus le ratio est petit, plus il y a eu du changement. Le ratio est compris entre 0 et 1.
 
 *http://api.watcher.link/diff/55cc93bb1d4aba76d0162f4b/*
 
