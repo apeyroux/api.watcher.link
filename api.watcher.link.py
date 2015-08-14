@@ -3,27 +3,26 @@
 #todo: faire des snap?get ?make ?list
 
 import datetime
-import re
-from mongoengine import DoesNotExist, ValidationError
+from difflib import SequenceMatcher, HtmlDiff
 
 import requests
+from mongoengine import DoesNotExist, ValidationError
 from flask import Flask, request, jsonify, abort, Response
 from bs4 import BeautifulSoup
-
 from selenium import webdriver
-from difflib import SequenceMatcher, HtmlDiff
 from flask.ext.mongoengine import MongoEngine
 from mongoengine.fields import StringField, DateTimeField, ListField, ReferenceField, FloatField, BinaryField
+from utils.text import cleanhtml
 
 DEFAULTMAXRATION = 0.97
 
 app = Flask(__name__)
-
 app.config['MONGODB_SETTINGS'] = {
     "db": "api-watcher-link"
 }
 
 db = MongoEngine(app)
+
 
 # Pour plustard, sert à faire un "cache" de diff
 class Diff(db.Document):
@@ -42,39 +41,6 @@ class Page(db.Document):
     maxratio = FloatField()
     snaps = ListField(ReferenceField(Snap))
     diffs = ListField(ReferenceField(Diff))
-
-
-def split80(tbl):
-    lentbl = len(tbl)
-    if lentbl >= 80:
-        yield "".join(list(split80(tbl[80:]))[:80])
-    else:
-        yield tbl
-
-
-def cleanhtml(html):
-    def clear(element):
-        if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
-            return False
-        elif re.match('<!--.*-->', unicode(element)):
-            return False
-        elif re.match('<!.*', unicode(element)):
-            return False
-        return True
-
-    bs = BeautifulSoup(html, 'html.parser')
-    body = filter(clear, bs.find_all(text=True))
-    cleanh = []
-    for line in body:
-        linestrip = re.sub(' +', ' ', "".join(line.replace('\n', '').replace('\t', '')))
-        lenlinestrip = len(linestrip)
-        if lenlinestrip > 0 and linestrip != '' and linestrip != ' ':
-            if lenlinestrip > 80:
-                for l in split80(linestrip):
-                    cleanh.append("%s" % l)
-            else:
-                cleanh.append("%s" % linestrip)
-    return cleanh
 
 
 @app.route('/getsnap/<snapid>/')
