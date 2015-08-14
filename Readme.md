@@ -3,6 +3,10 @@
 Exemple simple d'un watcher de liens. Il manque des fonctions comme des abonnements 
 qui pourraient envoyer un mail si une page change avec un maxratio < 0.80.
 
+Si un ratio, de 0.99, la page n'a pas bcp changée. Cela peut être un js dynamique par exemple.
+Un 'vrais' changement à un ratio de moins de 0.98/0.97. Si le ratio est à 1 alors la page n'a pas changée.
+Il faut faire des tests sur votre page pour avoir le bon ratio.
+
 ## TODO
 
 - Mettre du redis (celery) pour la creation d'un watcher, les snaps ...
