@@ -1,7 +1,6 @@
 from apiwatcherlink import app
 from apiwatcherlink.rest.page import PageView
-from apiwatcherlink.rest.screen import ScreenView
-from apiwatcherlink.rest.snap import SnapView
+from apiwatcherlink.rest.snap import SnapView, ScreenPngView, ScreenHtmlView
 from apiwatcherlink.rest.diff import DiffView
 
 def start():
@@ -16,10 +15,12 @@ def start():
     # Snap
     #
     snapview = SnapView.as_view('snapview')
-    screenview = ScreenView.as_view('screenview')
+    screenpngview = ScreenPngView.as_view('screenpngview')
+    screenhtmlview = ScreenHtmlView.as_view('screenhtmlview')
     # GET : get du snap
     app.add_url_rule('/snap/<id>/', view_func=snapview, methods=['GET'])
-    app.add_url_rule('/snap/<id>/screen/', view_func=screenview, methods=['GET'])
+    app.add_url_rule('/snap/<id>/png/', view_func=screenpngview, methods=['GET'])
+    app.add_url_rule('/snap/<id>/html/', view_func=screenhtmlview, methods=['GET'])
     # POST : creat snap de la pageid | GET : return snaps de la page
     app.add_url_rule('/snap/', view_func=snapview, methods=['POST'])
 
