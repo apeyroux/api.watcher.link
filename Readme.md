@@ -7,105 +7,141 @@ qui pourraient envoyer un mail si une page change avec un maxratio < 0.80.
 
 - Mettre du redis (celery) pour la creation d'un watcher, les snaps ...
 
-## Exemple utilisation
+## Documentation
 
-### Je veux watch une url
+### Create page
 
-curl http://api.watcher.link/new/?url=http://classik.forumactif.com/f7-concerts
+```
+curl -X POST -d "url=http://classik.forumactif.com/t7431-ces-disques-rares-qu-on-reverait-d-acuerir" http://api.watcher.link/page/
+```
 
 ```
 {
   "page": {
-    "_id": {
-      "$oid": "55cd19651d4aba7ea02889e1"
-    }, 
-    "baseurl": "http://classik.forumactif.com/f7-concerts", 
-    "diffs": [], 
-    "maxratio": 0.97, 
-    "name": "Concerts", 
+    "baseurl": "http://classik.forumactif.com/t7431-ces-disques-rares-qu-on-reverait-d-acquerir", 
+    "id": "55ce1e241d4aba8c80e8b636", 
+    "maxratio": 0.98, 
+    "name": "Ces disques rares qu'on r\u00eaverait d'acqu\u00e9rir...", 
     "snaps": []
   }
 }
 ```
 
-### Faire un snap 
+### View page
 
-Avec comme id de page 55cd19651d4aba7ea02889e1
-
-curl http://api.watcher.link/snap/55cd19651d4aba7ea02889e1/
+```
+curl http://api.watcher.link/page/55ce1e241d4aba8c80e8b636/
+```
 
 ```
 {
   "page": {
-    "_id": {
-      "$oid": "55cd19651d4aba7ea02889e1"
-    }, 
-    "baseurl": "http://classik.forumactif.com/f7-concerts", 
-    "diffs": [], 
-    "maxratio": 0.97, 
-    "name": "Concerts", 
+    "baseurl": "http://classik.forumactif.com/t7431-ces-disques-rares-qu-on-reverait-d-acquerir", 
+    "id": "55ce1e241d4aba8c80e8b636", 
+    "maxratio": 0.98, 
+    "name": "Ces disques rares qu'on r\u00eaverait d'acqu\u00e9rir...", 
     "snaps": [
       {
-        "$oid": "55cd19661d4aba7ea02889e2"
+        "dthr": "Fri, 14 Aug 2015 18:59:11 GMT", 
+        "id": "55ce1e5f1d4aba8c80e8b637"
       }, 
       {
-        "$oid": "55cd19671d4aba7ea02889e3"
+        "dthr": "Fri, 14 Aug 2015 18:59:11 GMT", 
+        "id": "55ce1e5f1d4aba8c80e8b638"
       }, 
       {
-        "$oid": "55cd19741d4aba7ea02889e4"
+        "dthr": "Fri, 14 Aug 2015 19:02:22 GMT", 
+        "id": "55ce1f1e1d4aba8c80e8b639"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:02:22 GMT", 
+        "id": "55ce1f1e1d4aba8c80e8b63a"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:02:24 GMT", 
+        "id": "55ce1f201d4aba8c80e8b63b"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:02:24 GMT", 
+        "id": "55ce1f201d4aba8c80e8b63c"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:04:08 GMT", 
+        "id": "55ce1f881d4aba8c9ae8998f"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:11:23 GMT", 
+        "id": "55ce213b1d4aba8cef139b5d"
+      }, 
+      {
+        "dthr": "Fri, 14 Aug 2015 19:11:30 GMT", 
+        "id": "55ce21421d4aba8cef139b5e"
       }
     ]
   }
 }
 ```
 
-J'ai 3 snap 55cd19661d4aba7ea02889e2, 55cd19671d4aba7ea02889e3 et 55cd19741d4aba7ea02889e4
+### Create snapshot
 
-### get le screen d'un snap (png)
+```
+curl -X POST -d "page=55ce1e241d4aba8c80e8b636" http://api.watcher.link/snap/
+```
 
-curl http://api.watcher.link/screen/55cd19741d4aba7ea02889e4/
+```
+{
+  "id": "55ce1e5f1d4aba8c80e8b638"
+}
+```
 
-### Voir le diff
+### View snap
 
-curl http://api.watcher.link/diff/55cd19651d4aba7ea02889e1/
+/!\ return all html and png ! 
+
+```
+curl http://api.watcher.link/snap/55ce1e5f1d4aba8c80e8b638/
+```
+
+#### View snap screen
+
+```
+curl http://api.watcher.link/snap/55ce21421d4aba8cef139b5e/screen/ > screen.png; open screen.png
+```
+
+## View diff between two snap
+
+```
+curl http://api.watcher.link/diff/55ce213b1d4aba8cef139b5d/55ce21421d4aba8cef139b5e/
+```
 
 ```
 {
   "diff": {
     "delete": [], 
     "fst": {
-      "dthr": "Fri, 14 Aug 2015 00:12:30 GMT", 
-      "id": "55cd164e1d4aba7e10fb82b5"
+      "dthr": "Fri, 14 Aug 2015 19:11:23 GMT", 
+      "id": "55ce213b1d4aba8cef139b5d"
     }, 
     "insert": [
-      "BEGIN cookies_alert  END cookies_alert"
+      ""
     ], 
-    "ratio": 0.9980487804878049, 
+    "ratio": 0.998598785614199, 
     "replace": [], 
     "snd": {
-      "dthr": "Fri, 14 Aug 2015 00:12:18 GMT", 
-      "id": "55cd16421d4aba7e10fb82b4"
+      "dthr": "Fri, 14 Aug 2015 19:11:30 GMT", 
+      "id": "55ce21421d4aba8cef139b5e"
     }
   }
 }
 ```
 
-Ici, un ratio, de 0.99, la page n'a pas bcp changée. Il y a eu qu'un inster 'BEGIN cookies ...' qui ne sert à rien. 
-Un 'vrais' changement à un ratio de moins de 0.98 0.97. Si le ratio est à 1 alors la page n'a pas changée.
-Il faut faire des tests sur votre page pour voir le bon ratio.
-
-### Voir le diff html
-
-curl http://api.watcher.link/diffhtml/55cd19651d4aba7ea02889e1/
-
-### voir un snap 
-
-curl http://api.watcher.link/getsnap/55cd19671d4aba7ea02889e3/
-
-
 ## Installation
 
 Voir le provisioning du Vagrantfile
+
+```
+pip setup.py install
+```
 
 ```
 apt-get install phantomjs python-dev
