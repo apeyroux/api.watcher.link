@@ -1,4 +1,4 @@
-# watcher de liens
+# POC watcher de liens
 
 Exemple simple d'un watcher de liens. Il manque des fonctions comme des abonnements 
 qui pourraient envoyer un mail si une page change avec un maxratio < 0.80.
