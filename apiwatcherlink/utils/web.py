@@ -1,12 +1,15 @@
 import re
 from bs4 import BeautifulSoup
+from apiwatcherlink.utils.text import split80
 
-def split80(tbl):
-    lentbl = len(tbl)
-    if lentbl >= 80:
-        yield "".join(list(split80(tbl[80:]))[:80])
+
+def gettitle(html):
+    bs = BeautifulSoup(html, 'html.parser')
+    if bs:
+        title = bs.find('title').text
+        return title
     else:
-        yield tbl
+        return ""
 
 
 def cleanhtml(html):

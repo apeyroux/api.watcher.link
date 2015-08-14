@@ -5,10 +5,9 @@ qui pourraient envoyer un mail si une page change avec un maxratio < 0.80.
 
 ## TODO
 
-- Mettre du redis pour la creation d'un watcher, les snaps ...
+- Mettre du redis (celery) pour la creation d'un watcher, les snaps ...
 
 ## Exemple utilisation
-
 
 ### Je veux watch une url
 
