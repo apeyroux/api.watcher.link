@@ -102,10 +102,16 @@ curl -X POST -d "page=55ce1e241d4aba8c80e8b636" http://api.watcher.link/snap/
 curl http://api.watcher.link/snap/55ce1e5f1d4aba8c80e8b638/
 ```
 
-#### View snap screen
+#### View snap png screen
 
 ```
-curl http://api.watcher.link/snap/55ce21421d4aba8cef139b5e/screen/ > screen.png; open screen.png
+curl http://api.watcher.link/snap/55ce21421d4aba8cef139b5e/png/ > screen.png; open screen.png
+```
+
+#### View snap html 
+
+```
+curl http://api.watcher.link/snap/55ce21421d4aba8cef139b5e/html/ > screen.html
 ```
 
 ## View diff between two snap
